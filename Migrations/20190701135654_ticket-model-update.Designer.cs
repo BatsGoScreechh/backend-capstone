@@ -4,14 +4,16 @@ using MCTCTicketSystem2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MCTCTicketSystem2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190701135654_ticket-model-update")]
+    partial class ticketmodelupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,7 +108,9 @@ namespace MCTCTicketSystem2.Migrations
 
                     b.Property<int>("CategoryId");
 
-                    b.Property<DateTime?>("DateCompleted");
+                    b.Property<DateTime?>("DateCompleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<DateTime>("DateSubmit")
                         .ValueGeneratedOnAddOrUpdate()
@@ -119,15 +123,9 @@ namespace MCTCTicketSystem2.Migrations
                     b.Property<string>("UserId")
                         .IsRequired();
 
-                    b.Property<string>("activeMessage");
-
                     b.Property<bool>("isActive");
 
                     b.HasKey("TicketId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("PlatformId");
 
                     b.HasIndex("UserId");
 
@@ -317,13 +315,13 @@ namespace MCTCTicketSystem2.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7c728dd8-1b10-4c6e-8815-80a1affd8ba4",
+                            ConcurrencyStamp = "d7dad1dd-ffbc-4a23-88d2-11c3b8160e80",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGxSNZvzP3sGEqC8tpv/DGeCkNAM8fHtRBYs+k+sbWxfgsXWk1m9Rc+ShRuK/SkflA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBhA7VoF8GOAQ1bLuCGNWj0gPxRujvzpSqpYqttfDI+DgvmpHJM1hUiafPg/pz49ZQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,
@@ -334,16 +332,6 @@ namespace MCTCTicketSystem2.Migrations
 
             modelBuilder.Entity("MCTCTicketSystem2.Models.Ticket", b =>
                 {
-                    b.HasOne("MCTCTicketSystem2.Models.Category", "currentCategory")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MCTCTicketSystem2.Models.Platform", "currentPlatform")
-                        .WithMany()
-                        .HasForeignKey("PlatformId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("MCTCTicketSystem2.Models.ApplicationUser", "User")
                         .WithMany("Tickets")
                         .HasForeignKey("UserId")

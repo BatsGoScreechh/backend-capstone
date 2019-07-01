@@ -8,8 +8,14 @@ namespace MCTCTicketSystem2.Models
 {
     public class Platform
     {
+        public Platform()
+        {
+
+        }
         [Key]
+        [Display(Name = "Platform")]
         public int PlatformId { get; set; }
+        [Display(Name = "Platform")]
         public string Label { get; set; }
     }
 }
