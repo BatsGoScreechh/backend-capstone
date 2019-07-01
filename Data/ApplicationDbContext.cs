@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bangazon.Data
+namespace MCTCTicketSystem2.Data
 {
     public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
@@ -29,7 +29,7 @@ namespace Bangazon.Data
 
             modelBuilder.Entity<Ticket>()
                 .Property(b => b.DateCompleted)
-                .HasDefaultValueSql("GETDATE()");
+                .HasDefaultValueSql(null);
 
             ApplicationUser user = new ApplicationUser
             {

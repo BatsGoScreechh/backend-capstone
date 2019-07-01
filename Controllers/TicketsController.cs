@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Bangazon.Data;
+using MCTCTicketSystem2.Data;
 using MCTCTicketSystem2.Models;
 using Microsoft.AspNetCore.Identity;
 
@@ -22,11 +22,14 @@ namespace MCTCTicketSystem2.Controllers
             _userManager = userManager;
 
         }
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Tickets
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Ticket.ToListAsync());
+            var applicationDbContext = _context.Ticket.Include(o => o.User).Include(o => o.currentCategory).Include(o => o.currentPlatform);
+
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Tickets/Details/5
@@ -37,7 +40,7 @@ namespace MCTCTicketSystem2.Controllers
                 return NotFound();
             }
 
-            var ticket = await _context.Ticket
+            var ticket = await _context.Ticket.Include(o => o.User).Include(o => o.currentCategory).Include(o => o.currentPlatform)
                 .FirstOrDefaultAsync(m => m.TicketId == id);
             if (ticket == null)
             {
@@ -50,7 +53,15 @@ namespace MCTCTicketSystem2.Controllers
         // GET: Tickets/Create
         public IActionResult Create()
         {
-            return View();
+            Ticket ticketModel = new Ticket();
+            SelectList ticketCategories = new SelectList(_context.Category, "CategoryId", "Label");
+            SelectList ticketPlatforms = new SelectList(_context.Platform, "PlatformId", "Label");
+            SelectList ticketCategories0 = CategoryDropdown(ticketCategories);
+            SelectList ticketPlatforms0 = PlatformDropdown(ticketPlatforms);
+            ticketModel.Categories = ticketCategories0;
+            ticketModel.Platforms = ticketPlatforms0;
+
+            return View(ticketModel);
         }
 
         // POST: Tickets/Create
@@ -58,14 +69,30 @@ namespace MCTCTicketSystem2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TicketId,DateSubmit,DateCompleted,Description,isActive,AdminComment,UserId,CategoryId,PlatformId")] Ticket ticket)
+        public async Task<IActionResult> Create([Bind("Description,CategoryId,PlatformId, currentPlatform, currentCategory")] Ticket ticket)
         {
+            ModelState.Remove("UserId");
+            ModelState.Remove("User");
             if (ModelState.IsValid)
             {
+                var currentUser = await GetCurrentUserAsync();
+                ticket.DateCompleted = null;
+                ticket.UserId = currentUser.Id;
+                ticket.isActive = true;
+
+                if (ticket.isActive == true)
+                {
+                    ticket.activeMessage = "Open";
+                }
+                else if (ticket.isActive == false)
+                {
+                    ticket.activeMessage = "Closed";
+                }
                 _context.Add(ticket);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", ticket.UserId);
             return View(ticket);
         }
 
@@ -76,8 +103,9 @@ namespace MCTCTicketSystem2.Controllers
             {
                 return NotFound();
             }
+            ApplicationUser user = await GetCurrentUserAsync();
 
-            var ticket = await _context.Ticket.FindAsync(id);
+            var ticket = await _context.Ticket.Include(o => o.User).Include(o => o.currentCategory).Include(o => o.currentPlatform).FirstOrDefaultAsync(m => m.TicketId == id);;
             if (ticket == null)
             {
                 return NotFound();
@@ -152,6 +180,45 @@ namespace MCTCTicketSystem2.Controllers
         private bool TicketExists(int id)
         {
             return _context.Ticket.Any(e => e.TicketId == id);
+        }
+
+        public static SelectList CategoryDropdown(SelectList selectList)
+        {
+
+            SelectListItem firstItem = new SelectListItem()
+            {
+                Text = "Select a Category"
+            };
+            List<SelectListItem> newList = selectList.ToList();
+            newList.Insert(0, firstItem);
+
+            var selectedItem = newList.FirstOrDefault(item => item.Selected);
+            var selectedItemValue = String.Empty;
+            if (selectedItem != null)
+            {
+                selectedItemValue = selectedItem.Value;
+            }
+
+            return new SelectList(newList, "Value", "Text", selectedItemValue);
+        }
+        public static SelectList PlatformDropdown(SelectList selectList)
+        {
+
+            SelectListItem firstItem = new SelectListItem()
+            {
+                Text = "Select a Platform"
+            };
+            List<SelectListItem> newList = selectList.ToList();
+            newList.Insert(0, firstItem);
+
+            var selectedItem = newList.FirstOrDefault(item => item.Selected);
+            var selectedItemValue = String.Empty;
+            if (selectedItem != null)
+            {
+                selectedItemValue = selectedItem.Value;
+            }
+
+            return new SelectList(newList, "Value", "Text", selectedItemValue);
         }
     }
 }

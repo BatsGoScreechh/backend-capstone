@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,25 +13,29 @@ namespace MCTCTicketSystem2.Models
         [Key]
         public int TicketId { get; set; }
         [Required]
-        [DataType(DataType.Date)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [Display(Name = "Submission Date")]
         public DateTime DateSubmit { get; set; }
 
-        [DataType(DataType.Date)]
         public DateTime? DateCompleted { get; set; }
         public string Description { get; set; }
         public bool isActive { get; set; }
+        [Display(Name = "Ticket Status")]
+        public string activeMessage { get; set; }
         public string AdminComment { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         [Required]
         public ApplicationUser User { get; set; }
-
+        [Display(Name = "Category")]
         public int CategoryId { get; set; }
-        public virtual ICollection<Category> Categories { get; set; }
-
+        [NotMapped]
+        public SelectList Categories { get; set; }
+        [Display(Name = "Platform")]
         public int PlatformId { get; set; }
-        public virtual ICollection<Platform> Platforms { get; set; }
-
+        [NotMapped]
+        public SelectList Platforms { get; set; }
+        public Platform currentPlatform { get; set; }
+        public Category currentCategory { get; set; }
 
     }
 }

@@ -13,28 +13,22 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.TicketId)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.DateSubmit)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateCompleted)
+                @Html.DisplayNameFor(model => model.User.UserName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.currentCategory.Label)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.isActive)
+                @Html.DisplayNameFor(model => model.currentPlatform.Label)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AdminComment)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PlatformId)
+                @Html.DisplayNameFor(model => model.activeMessage)
             </th>
             <th></th>
         </tr>
@@ -43,28 +37,22 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.TicketId)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.DateSubmit)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DateCompleted)
+                @Html.DisplayFor(modelItem => item.User.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.currentCategory.Label)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.isActive)
+                @Html.DisplayFor(modelItem => item.currentPlatform.Label)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AdminComment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PlatformId)
+             <td>
+                @Html.DisplayFor(modelItem => item.activeMessage)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.TicketId">Edit</a> |

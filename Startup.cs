@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Bangazon.Data;
+using MCTCTicketSystem2.Data;
 using MCTCTicketSystem2.Models;
 
 namespace MCTCTicketSystem2
