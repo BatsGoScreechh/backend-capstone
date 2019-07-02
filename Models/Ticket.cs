@@ -36,6 +36,6 @@ namespace MCTCTicketSystem2.Models
         public SelectList Platforms { get; set; }
         public Platform currentPlatform { get; set; }
         public Category currentCategory { get; set; }
-
+        public string Title { get; set; }
     }
 }

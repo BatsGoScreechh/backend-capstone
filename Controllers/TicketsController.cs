@@ -69,7 +69,7 @@ namespace MCTCTicketSystem2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Description,CategoryId,PlatformId, currentPlatform, currentCategory")] Ticket ticket)
+        public async Task<IActionResult> Create([Bind("Description,CategoryId,PlatformId, currentPlatform, currentCategory,Title,isActive")] Ticket ticket)
         {
             ModelState.Remove("UserId");
             ModelState.Remove("User");
@@ -103,9 +103,20 @@ namespace MCTCTicketSystem2.Controllers
             {
                 return NotFound();
             }
-            ApplicationUser user = await GetCurrentUserAsync();
 
-            var ticket = await _context.Ticket.Include(o => o.User).Include(o => o.currentCategory).Include(o => o.currentPlatform).FirstOrDefaultAsync(m => m.TicketId == id);;
+
+
+
+            var ticket = await _context.Ticket.FindAsync(id);
+            SelectList ticketCategories = new SelectList(_context.Category, "CategoryId", "Label");
+            SelectList ticketPlatforms = new SelectList(_context.Platform, "PlatformId", "Label");
+            SelectList ticketCategories0 = CategoryDropdown(ticketCategories);
+            SelectList ticketPlatforms0 = PlatformDropdown(ticketPlatforms);
+            ticket.Categories = ticketCategories0;
+            ticket.Platforms = ticketPlatforms0;
+
+            ApplicationUser user = await GetCurrentUserAsync();
+            user.Id = ticket.UserId;
             if (ticket == null)
             {
                 return NotFound();
@@ -118,32 +129,45 @@ namespace MCTCTicketSystem2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TicketId,DateSubmit,DateCompleted,Description,isActive,AdminComment,UserId,CategoryId,PlatformId")] Ticket ticket)
+        public async Task<IActionResult> Edit(int id,
+            [Bind("TicketId,Description,PlatformId,CategoryId,DateSubmit,currentPlatform,currentCategory, isActive, AdminComment,Title")] Ticket ticket)
         {
-            if (id != ticket.TicketId)
-            {
-                return NotFound();
-            }
+            ModelState.Remove("User");
+            ModelState.Remove("UserId");
+            id = ticket.TicketId;
 
             if (ModelState.IsValid)
             {
+                if (ticket.isActive == true)
+                {
+                    ticket.activeMessage = "Open";
+                }
+                else if (ticket.isActive == false)
+                {
+                    ticket.activeMessage = "Closed";
+                }
+
                 try
                 {
+                    ApplicationUser user = await GetCurrentUserAsync();
+                    ticket.UserId = user.Id;
+
                     _context.Update(ticket);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TicketExists(ticket.TicketId))
-                    {
-                        return NotFound();
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!TicketExists(ticket.TicketId))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
-                }
-                return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Details", new { id = ticket.TicketId });
+              
             }
             return View(ticket);
         }
