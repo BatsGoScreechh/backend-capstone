@@ -11,56 +11,50 @@
     <h4>Ticket</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DateSubmit)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DateSubmit)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateCompleted)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateCompleted)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.isActive)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.activeMessage)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.isActive)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.activeMessage)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AdminComment)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User.UserName)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AdminComment)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.UserName)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserId)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.currentCategory.Label)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserId)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.currentCategory.Label)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CategoryId)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.currentPlatform.Label)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CategoryId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PlatformId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PlatformId)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.currentPlatform.Label)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="TicketId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
