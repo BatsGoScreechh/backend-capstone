@@ -27,9 +27,9 @@ namespace MCTCTicketSystem2.Controllers
         // GET: Tickets
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Ticket.Include(o => o.User).Include(o => o.currentCategory).Include(o => o.currentPlatform);
+            var applicationDbContext = await _context.Ticket.Include(o => o.User).Include(o => o.currentCategory).Include(o => o.currentPlatform).ToListAsync();
 
-            return View(await applicationDbContext.ToListAsync());
+            return View(applicationDbContext);
         }
 
         // GET: Tickets/Details/5
@@ -79,15 +79,7 @@ namespace MCTCTicketSystem2.Controllers
                 ticket.DateCompleted = null;
                 ticket.UserId = currentUser.Id;
                 ticket.isActive = true;
-
-                if (ticket.isActive == true)
-                {
-                    ticket.activeMessage = "Open";
-                }
-                else if (ticket.isActive == false)
-                {
-                    ticket.activeMessage = "Closed";
-                }
+                ticket.activeMessage = "Open";
                 _context.Add(ticket);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -138,19 +130,14 @@ namespace MCTCTicketSystem2.Controllers
 
             if (ModelState.IsValid)
             {
-                if (ticket.isActive == true)
-                {
-                    ticket.activeMessage = "Open";
-                }
-                else if (ticket.isActive == false)
-                {
-                    ticket.activeMessage = "Closed";
-                }
+                ticket.isActive = true;
+                ticket.activeMessage = "Open";
 
                 try
                 {
                     ApplicationUser user = await GetCurrentUserAsync();
                     ticket.UserId = user.Id;
+                    ticket.isActive = true;
 
                     _context.Update(ticket);
                         await _context.SaveChangesAsync();
@@ -180,7 +167,7 @@ namespace MCTCTicketSystem2.Controllers
                 return NotFound();
             }
 
-            var ticket = await _context.Ticket
+            var ticket = await _context.Ticket.Include(o => o.User).Include(o => o.currentCategory).Include(o => o.currentPlatform)
                 .FirstOrDefaultAsync(m => m.TicketId == id);
             if (ticket == null)
             {
@@ -196,18 +183,12 @@ namespace MCTCTicketSystem2.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var ticket = await _context.Ticket.FindAsync(id);
-            if (ticket.isActive == true)
-            {
-                ticket.activeMessage = "Open";
-            }
-            else if (ticket.isActive == false)
-            {
-                ticket.activeMessage = "Closed";
-            }
 
             if (ticket.isActive == true)
             {
                 ticket.isActive = false;
+                ticket.activeMessage = "Closed";
+
             }
             _context.Ticket.Update(ticket);
             await _context.SaveChangesAsync();
