@@ -9,6 +9,8 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<h2>Open Tickets</h2>
 <table class="table">
     <thead>
         <tr>
@@ -34,6 +36,7 @@
         </tr>
     </thead>
     <tbody>
+<<<<<<< HEAD
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -61,5 +64,71 @@
             </td>
         </tr>
 }
+=======
+        @foreach (var item in Model)
+        {
+            @if (item.isActive == true)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateSubmit)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.activeMessage)
+                    </td>
+                    <td>
+                        |
+                        <a asp-action="Details" asp-route-id="@item.TicketId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.TicketId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+>>>>>>> 8d42ee4dc66bbda04269ff23a65841dfcf633144
     </tbody>
-</table>
+    </table>
+
+<h2>Closed Tickets</h2>
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateSubmit)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.activeMessage)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                @if (item.isActive == false)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateSubmit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.activeMessage)
+                        </td>
+                        <td>
+                            |
+                            <a asp-action="Details" asp-route-id="@item.TicketId">Details</a> |
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>

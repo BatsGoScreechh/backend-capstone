@@ -21,7 +21,8 @@ namespace MCTCTicketSystem2.Models
         public string Description { get; set; }
         public bool isActive { get; set; }
         [Display(Name = "Ticket Status")]
-        public string activeMessage { get; set; }
+        public string activeMessage
+        { get; set; }
         public string AdminComment { get; set; }
         public string UserId { get; set; }
         [Required]

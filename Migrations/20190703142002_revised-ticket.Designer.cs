@@ -4,14 +4,16 @@ using MCTCTicketSystem2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MCTCTicketSystem2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190703142002_revised-ticket")]
+    partial class revisedticket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,6 +117,8 @@ namespace MCTCTicketSystem2.Migrations
                     b.Property<string>("Description");
 
                     b.Property<int>("PlatformId");
+
+                    b.Property<string>("Title");
 
                     b.Property<string>("UserId")
                         .IsRequired();
@@ -317,21 +321,13 @@ namespace MCTCTicketSystem2.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-<<<<<<< HEAD
-                            ConcurrencyStamp = "7c728dd8-1b10-4c6e-8815-80a1affd8ba4",
-=======
                             ConcurrencyStamp = "ff5934ac-6ef6-4f27-8395-d07834c35ce1",
->>>>>>> 8d42ee4dc66bbda04269ff23a65841dfcf633144
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-<<<<<<< HEAD
-                            PasswordHash = "AQAAAAEAACcQAAAAEGxSNZvzP3sGEqC8tpv/DGeCkNAM8fHtRBYs+k+sbWxfgsXWk1m9Rc+ShRuK/SkflA==",
-=======
                             PasswordHash = "AQAAAAEAACcQAAAAEFv+S3vM31eCctQH7kGHOWanUYCWAGZwsL3EFvHME8HbqYn/MIyKGBA7TNvN9waF3g==",
->>>>>>> 8d42ee4dc66bbda04269ff23a65841dfcf633144
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,
