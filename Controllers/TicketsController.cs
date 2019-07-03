@@ -196,7 +196,20 @@ namespace MCTCTicketSystem2.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var ticket = await _context.Ticket.FindAsync(id);
-            _context.Ticket.Remove(ticket);
+            if (ticket.isActive == true)
+            {
+                ticket.activeMessage = "Open";
+            }
+            else if (ticket.isActive == false)
+            {
+                ticket.activeMessage = "Closed";
+            }
+
+            if (ticket.isActive == true)
+            {
+                ticket.isActive = false;
+            }
+            _context.Ticket.Update(ticket);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
