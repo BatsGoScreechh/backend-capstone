@@ -16,11 +16,11 @@ namespace MCTCTicketSystem2.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [Display(Name = "Submission Date")]
         public DateTime DateSubmit { get; set; }
-
+        [Display(Name = "Date Completed")]
         public DateTime? DateCompleted { get; set; }
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
-        public bool isActive { get; set; }
+        public string isActive { get; set; }
         [Display(Name = "Ticket Status")]
         public string activeMessage
         { get; set; }

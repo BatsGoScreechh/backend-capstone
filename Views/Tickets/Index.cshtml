@@ -8,62 +8,14 @@
 <p>
     <a asp-action="Create">Create New Ticket</a>
 </p>
-
-@if (Model.Count() > 0)
-{
-    <h3>Open Tickets</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.DateSubmit)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.activeMessage)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                @if (item.isActive == true)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DateSubmit)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Title)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.activeMessage)
-                        </td>
-                        <td>
-                            |
-                            <a asp-action="Details" asp-route-id="@item.TicketId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.TicketId">Close</a>
-                        </td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
-
-    <h3>Closed Tickets</h3>
     @if (Model.Count() > 0)
     {
+        <h3>Open Tickets</h3>
         <table class="table">
             <thead>
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.DateSubmit)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.DateCompleted)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Title)
@@ -77,14 +29,11 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    @if (item.isActive == false)
+                    @if (item.isActive == "Open")
                     {
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.DateSubmit)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DateCompleted)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Title)
@@ -95,12 +44,62 @@
                             <td>
                                 |
                                 <a asp-action="Details" asp-route-id="@item.TicketId">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.TicketId">Close</a>
                             </td>
                         </tr>
                     }
                 }
             </tbody>
         </table>
+
+        <h3>Closed Tickets</h3>
+        @if (Model.Count() > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DateSubmit)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DateCompleted)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.activeMessage)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        @if (item.isActive == "Closed")
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DateSubmit)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DateCompleted)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.activeMessage)
+                                </td>
+                                <td>
+                                    |
+                                    <a asp-action="Details" asp-route-id="@item.TicketId">Details</a> |
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
         }
     }
 

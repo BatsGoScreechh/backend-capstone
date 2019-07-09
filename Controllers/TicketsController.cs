@@ -26,6 +26,7 @@ namespace MCTCTicketSystem2.Controllers
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Tickets
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var user = await GetCurrentUserAsync();
@@ -47,6 +48,7 @@ namespace MCTCTicketSystem2.Controllers
         }
 
         // GET: Tickets/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -65,6 +67,7 @@ namespace MCTCTicketSystem2.Controllers
         }
 
         // GET: Tickets/Create
+        [Authorize]
         public IActionResult Create()
         {
             Ticket ticketModel = new Ticket();
@@ -83,6 +86,7 @@ namespace MCTCTicketSystem2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Description,CategoryId,PlatformId, currentPlatform, currentCategory,Title,isActive")] Ticket ticket)
         {
             ModelState.Remove("UserId");
@@ -92,8 +96,7 @@ namespace MCTCTicketSystem2.Controllers
                 var currentUser = await GetCurrentUserAsync();
                 ticket.DateCompleted = null;
                 ticket.UserId = currentUser.Id;
-                ticket.isActive = true;
-                ticket.activeMessage = "Open";
+                ticket.isActive = "Open";
                 _context.Add(ticket);
                 await _context.SaveChangesAsync();
                 Task.WaitAll(Task.Delay(5000));
@@ -104,6 +107,7 @@ namespace MCTCTicketSystem2.Controllers
         }
 
         // GET: Tickets/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -136,6 +140,7 @@ namespace MCTCTicketSystem2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id,
             [Bind("TicketId,Description,PlatformId,CategoryId,DateSubmit,currentPlatform,currentCategory, isActive, AdminComment,Title")] Ticket ticket)
         {
@@ -145,14 +150,12 @@ namespace MCTCTicketSystem2.Controllers
 
             if (ModelState.IsValid)
             {
-                ticket.isActive = true;
-                ticket.activeMessage = "Open";
+                ticket.isActive = "Open";
 
                 try
                 {
                     ApplicationUser user = await GetCurrentUserAsync();
                     ticket.UserId = user.Id;
-                    ticket.isActive = true;
 
                     _context.Update(ticket);
                         await _context.SaveChangesAsync();
@@ -175,6 +178,7 @@ namespace MCTCTicketSystem2.Controllers
         }
 
         // GET: Tickets/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -195,14 +199,14 @@ namespace MCTCTicketSystem2.Controllers
         // POST: Tickets/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var ticket = await _context.Ticket.FindAsync(id);
 
-            if (ticket.isActive == true)
+            if (ticket.isActive == "Open")
             {
-                ticket.isActive = false;
-                ticket.activeMessage = "Closed";
+                ticket.isActive = "Closed";
                 ticket.DateCompleted = DateTime.Now;
 
             }
