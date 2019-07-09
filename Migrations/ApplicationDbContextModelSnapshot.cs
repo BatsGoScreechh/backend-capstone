@@ -116,8 +116,6 @@ namespace MCTCTicketSystem2.Migrations
 
                     b.Property<int>("PlatformId");
 
-                    b.Property<string>("Title");
-
                     b.Property<string>("UserId")
                         .IsRequired();
 
@@ -319,13 +317,29 @@ namespace MCTCTicketSystem2.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
+<<<<<<< HEAD
                             ConcurrencyStamp = "433e6e05-4ae9-4886-a357-b744f8cd2579",
+=======
+<<<<<<< HEAD
+                            ConcurrencyStamp = "7c728dd8-1b10-4c6e-8815-80a1affd8ba4",
+=======
+                            ConcurrencyStamp = "ff5934ac-6ef6-4f27-8395-d07834c35ce1",
+>>>>>>> 8d42ee4dc66bbda04269ff23a65841dfcf633144
+>>>>>>> master
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
+<<<<<<< HEAD
                             PasswordHash = "AQAAAAEAACcQAAAAEBp7b3BZ4JNW+96m9YwhV1fR8leZRErwMe/zS5Us87ZVMB0bUYvT67luNPonAPJiRQ==",
+=======
+<<<<<<< HEAD
+                            PasswordHash = "AQAAAAEAACcQAAAAEGxSNZvzP3sGEqC8tpv/DGeCkNAM8fHtRBYs+k+sbWxfgsXWk1m9Rc+ShRuK/SkflA==",
+=======
+                            PasswordHash = "AQAAAAEAACcQAAAAEFv+S3vM31eCctQH7kGHOWanUYCWAGZwsL3EFvHME8HbqYn/MIyKGBA7TNvN9waF3g==",
+>>>>>>> 8d42ee4dc66bbda04269ff23a65841dfcf633144
+>>>>>>> master
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,
