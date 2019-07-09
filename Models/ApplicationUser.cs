@@ -9,15 +9,8 @@ namespace MCTCTicketSystem2.Models
 {
     public class ApplicationUser : IdentityUser
     {
-<<<<<<< HEAD
         public ApplicationUser(){ }
-        [HiddenInput(DisplayValue = false)]
-=======
-        public ApplicationUser()
-        {
 
-        }
->>>>>>> master
         public bool isAdmin { get; set; }
     }
 
