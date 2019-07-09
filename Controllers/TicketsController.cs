@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MCTCTicketSystem2.Data;
 using MCTCTicketSystem2.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MCTCTicketSystem2.Controllers
 {
@@ -27,9 +28,22 @@ namespace MCTCTicketSystem2.Controllers
         // GET: Tickets
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = await _context.Ticket.Include(o => o.User).Include(o => o.currentCategory).Include(o => o.currentPlatform).ToListAsync();
+            var user = await GetCurrentUserAsync();
 
-            return View(applicationDbContext);
+            if (user.isAdmin == false)
+            {
+              
+                var applicationDbContext = _context.Ticket.Include(o => o.User).Include(o => o.currentCategory).Include(o => o.currentPlatform).Where(o => o.UserId == user.Id);
+
+                return View(await applicationDbContext.ToListAsync());
+            }
+            if(user.isAdmin == true)
+            {
+                var applicationDbContext = _context.Ticket.Include(o => o.User).Include(o => o.currentCategory).Include(o => o.currentPlatform);
+
+                return View(await applicationDbContext.ToListAsync());
+            }
+            return View();
         }
 
         // GET: Tickets/Details/5
@@ -82,6 +96,7 @@ namespace MCTCTicketSystem2.Controllers
                 ticket.activeMessage = "Open";
                 _context.Add(ticket);
                 await _context.SaveChangesAsync();
+                Task.WaitAll(Task.Delay(5000));
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", ticket.UserId);
@@ -188,6 +203,7 @@ namespace MCTCTicketSystem2.Controllers
             {
                 ticket.isActive = false;
                 ticket.activeMessage = "Closed";
+                ticket.DateCompleted = DateTime.Now;
 
             }
             _context.Ticket.Update(ticket);
@@ -238,5 +254,7 @@ namespace MCTCTicketSystem2.Controllers
 
             return new SelectList(newList, "Value", "Text", selectedItemValue);
         }
+
+
     }
 }

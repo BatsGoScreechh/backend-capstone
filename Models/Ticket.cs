@@ -18,6 +18,7 @@ namespace MCTCTicketSystem2.Models
         public DateTime DateSubmit { get; set; }
 
         public DateTime? DateCompleted { get; set; }
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
         public bool isActive { get; set; }
         [Display(Name = "Ticket Status")]

@@ -1,4 +1,9 @@
-﻿@model MCTCTicketSystem2.Models.Ticket
+﻿@using Microsoft.AspNetCore.Identity
+@using MCTCTicketSystem2.Models
+
+@model MCTCTicketSystem2.Models.Ticket
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Edit";

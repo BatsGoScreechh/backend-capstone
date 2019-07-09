@@ -4,14 +4,16 @@ using MCTCTicketSystem2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MCTCTicketSystem2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190708153537_user-class-revise")]
+    partial class userclassrevise
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -319,13 +321,13 @@ namespace MCTCTicketSystem2.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "433e6e05-4ae9-4886-a357-b744f8cd2579",
+                            ConcurrencyStamp = "c3c4130b-bb8e-4d96-9194-f00a3f5ea43e",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBp7b3BZ4JNW+96m9YwhV1fR8leZRErwMe/zS5Us87ZVMB0bUYvT67luNPonAPJiRQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDbs1G6svI380E8d2SFw6pUER4MR8pJKwzImTWahDW90OpOyPMw4+cHCRXzPEqtOpA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,

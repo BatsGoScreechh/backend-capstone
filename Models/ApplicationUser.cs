@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,8 @@ namespace MCTCTicketSystem2.Models
     public class ApplicationUser : IdentityUser
     {
         public ApplicationUser(){ }
+        [HiddenInput(DisplayValue = false)]
         public bool isAdmin { get; set; }
-
-        public virtual ICollection<Ticket> Tickets { get; set; }
-
     }
 
 }

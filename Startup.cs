@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MCTCTicketSystem2.Data;
 using MCTCTicketSystem2.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace MCTCTicketSystem2
 {
@@ -74,5 +75,6 @@ namespace MCTCTicketSystem2
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+      
     }
 }
