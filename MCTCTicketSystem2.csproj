@@ -14,12 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20190709133750_update-revision-revised.cs" />
-    <Compile Remove="Migrations\20190709133750_update-revision-revised.Designer.cs" />
-    <Compile Remove="Migrations\20190709153140_ticket-update.cs" />
-    <Compile Remove="Migrations\20190709153140_ticket-update.Designer.cs" />
-    <Compile Remove="Migrations\20190709160457_test-migration.cs" />
-    <Compile Remove="Migrations\20190709160457_test-migration.Designer.cs" />
+    <Compile Remove="Migrations\20190709174701_fix-issues.cs" />
+    <Compile Remove="Migrations\20190709174701_fix-issues.Designer.cs" />
   </ItemGroup>
 
 

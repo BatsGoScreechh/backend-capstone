@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MCTCTicketSystem2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190708153537_user-class-revise")]
-    partial class userclassrevise
+    [Migration("20190709172252_new-db-ticket-update2")]
+    partial class newdbticketupdate2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -125,7 +125,7 @@ namespace MCTCTicketSystem2.Migrations
 
                     b.Property<string>("activeMessage");
 
-                    b.Property<bool>("isActive");
+                    b.Property<string>("isActive");
 
                     b.HasKey("TicketId");
 
@@ -321,13 +321,13 @@ namespace MCTCTicketSystem2.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c3c4130b-bb8e-4d96-9194-f00a3f5ea43e",
+                            ConcurrencyStamp = "32df368c-a2d8-45bb-bc7c-686f21211ab6",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDbs1G6svI380E8d2SFw6pUER4MR8pJKwzImTWahDW90OpOyPMw4+cHCRXzPEqtOpA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIBSEks3nK86hoAxbMdcbWCTsqo/mDb33aipeSAjZkVt27RBOHuC1ey0ITM+HkdnMA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,

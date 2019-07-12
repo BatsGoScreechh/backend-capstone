@@ -1,9 +1,10 @@
-C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\bin\Debug\netcoreapp2.2\MCTCTicketSystem2.dll
-C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\bin\Debug\netcoreapp2.2\MCTCTicketSystem2.Views.dll
 C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\bin\Debug\netcoreapp2.2\MCTCTicketSystem2.deps.json
 C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\bin\Debug\netcoreapp2.2\MCTCTicketSystem2.runtimeconfig.json
 C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\bin\Debug\netcoreapp2.2\MCTCTicketSystem2.runtimeconfig.dev.json
-C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\obj\Debug\netcoreapp2.2\MCTCTicketSystem2.csprojAssemblyReference.cache
+C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\bin\Debug\netcoreapp2.2\MCTCTicketSystem2.dll
+C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\bin\Debug\netcoreapp2.2\MCTCTicketSystem2.pdb
+C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\bin\Debug\netcoreapp2.2\MCTCTicketSystem2.Views.dll
+C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\bin\Debug\netcoreapp2.2\MCTCTicketSystem2.Views.pdb
 C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\obj\Debug\netcoreapp2.2\MCTCTicketSystem2.csproj.CoreCompileInputs.cache
 C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\obj\Debug\netcoreapp2.2\MCTCTicketSystem2.RazorAssemblyInfo.cache
 C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\obj\Debug\netcoreapp2.2\MCTCTicketSystem2.RazorAssemblyInfo.cs
@@ -48,3 +49,10 @@ C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\obj\Debug\netcoreapp2.2
 C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\obj\Debug\netcoreapp2.2\MCTCTicketSystem2.Views.pdb
 C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\obj\Debug\netcoreapp2.2\MCTCTicketSystem2.dll
 C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\obj\Debug\netcoreapp2.2\MCTCTicketSystem2.pdb
+C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\obj\Debug\netcoreapp2.2\MCTCTicketSystem2.csproj.CopyComplete
+C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\obj\Debug\netcoreapp2.2\MCTCTicketSystem2.csprojAssemblyReference.cache
+C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\obj\Debug\netcoreapp2.2\Razor\Views\Admin\Create.g.cshtml.cs
+C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\obj\Debug\netcoreapp2.2\Razor\Views\Admin\Delete.g.cshtml.cs
+C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\obj\Debug\netcoreapp2.2\Razor\Views\Admin\Details.g.cshtml.cs
+C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\obj\Debug\netcoreapp2.2\Razor\Views\Admin\Edit.g.cshtml.cs
+C:\Users\Newforce\workspace\BEcapstone\MCTCTicketSystem2\obj\Debug\netcoreapp2.2\Razor\Views\Admin\Index.g.cshtml.cs

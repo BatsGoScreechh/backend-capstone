@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace MCTCTicketSystem2.Models
@@ -20,7 +21,7 @@ namespace MCTCTicketSystem2.Models
         public DateTime? DateCompleted { get; set; }
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
-        public string isActive { get; set; }
+        public bool isActive { get; set; }
         [Display(Name = "Ticket Status")]
         public string activeMessage
         { get; set; }
@@ -39,5 +40,7 @@ namespace MCTCTicketSystem2.Models
         public Platform currentPlatform { get; set; }
         public Category currentCategory { get; set; }
         public string Title { get; set; }
+
+
     }
 }

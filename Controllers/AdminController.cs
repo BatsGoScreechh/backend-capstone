@@ -9,15 +9,17 @@ using MCTCTicketSystem2.Data;
 using MCTCTicketSystem2.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 namespace MCTCTicketSystem2.Controllers
 {
-    public class TicketsController : Controller
+    public class AdminController : Controller
     {
+
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public TicketsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public AdminController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -30,16 +32,12 @@ namespace MCTCTicketSystem2.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await GetCurrentUserAsync();
+
+
             if (user.isAdmin == false)
             {
-              
-                var applicationDbContext = _context.Ticket.Include(o => o.User).Include(o => o.currentCategory).Include(o => o.currentPlatform).Where(o => o.UserId == user.Id);
 
-                return View(await applicationDbContext.ToListAsync());
-            }
-            if(user.isAdmin == true)
-            {
-                return RedirectToAction("Index", "Admin");
+                return NotFound();
 
             }
             if (user.isAdmin == true)
@@ -48,7 +46,9 @@ namespace MCTCTicketSystem2.Controllers
 
                 return View(await applicationDbContext.ToListAsync());
             }
-            return View();
+
+                return View();
+          
         }
 
         // GET: Tickets/Details/5
@@ -104,7 +104,7 @@ namespace MCTCTicketSystem2.Controllers
                 ticket.activeMessage = "Open";
                 _context.Add(ticket);
                 await _context.SaveChangesAsync();
-                Task.WaitAll(Task.Delay(2000));
+                Task.WaitAll(Task.Delay(5000));
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", ticket.UserId);
@@ -164,26 +164,27 @@ namespace MCTCTicketSystem2.Controllers
                     ticket.UserId = user.Id;
 
                     _context.Update(ticket);
-                        await _context.SaveChangesAsync();
-                    }
-                    catch (DbUpdateConcurrencyException)
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TicketExists(ticket.TicketId))
                     {
-                        if (!TicketExists(ticket.TicketId))
-                        {
-                            return NotFound();
-                        }
-                        else
-                        {
-                            throw;
-                        }
+                        return NotFound();
                     }
-                    return RedirectToAction("Details", new { id = ticket.TicketId });
-              
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Details", new { id = ticket.TicketId });
+
             }
             return View(ticket);
         }
 
         // GET: Tickets/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -204,9 +205,10 @@ namespace MCTCTicketSystem2.Controllers
         // POST: Tickets/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int TicketId)
+        [Authorize]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ticket = await _context.Ticket.FindAsync(TicketId);
+            var ticket = await _context.Ticket.FindAsync(id);
 
             if (ticket.isActive == true)
             {
@@ -224,6 +226,7 @@ namespace MCTCTicketSystem2.Controllers
         {
             return _context.Ticket.Any(e => e.TicketId == id);
         }
+
 
         public static SelectList CategoryDropdown(SelectList selectList)
         {
@@ -264,6 +267,44 @@ namespace MCTCTicketSystem2.Controllers
             return new SelectList(newList, "Value", "Text", selectedItemValue);
         }
 
+        public IActionResult Line()
+        {
 
+        //list of countries  
+       
+        var lstModel = new List<SimpleReportViewModel>();
+        lstModel.Add( new SimpleReportViewModel  
+           {  
+               DimensionOne = "Brazil",  
+               Quantity = 10  
+           } );  
+           lstModel.Add( new SimpleReportViewModel  
+           {  
+               DimensionOne = "USA",  
+               Quantity = 6  
+           } );  
+           lstModel.Add( new SimpleReportViewModel  
+           {  
+               DimensionOne = "Portugal",  
+               Quantity = 4  
+           } );  
+           lstModel.Add( new SimpleReportViewModel  
+           {  
+               DimensionOne = "Russia",  
+               Quantity = 7  
+           } );  
+           lstModel.Add( new SimpleReportViewModel  
+           {  
+               DimensionOne = "Ireland",  
+               Quantity = 9 
+           } );  
+           lstModel.Add( new SimpleReportViewModel  
+           {  
+               DimensionOne = "Germany",  
+               Quantity = 1
+           } );  
+           return View(lstModel );  
+       }  
     }
+
 }

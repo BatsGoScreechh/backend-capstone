@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MCTCTicketSystem2.Data.Migrations
+namespace MCTCTicketSystem2.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class newdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,11 +40,40 @@ namespace MCTCTicketSystem2.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    isAdmin = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Category",
+                columns: table => new
+                {
+                    CategoryId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Label = table.Column<string>(nullable: true),
+                    Rating = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => x.CategoryId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Platform",
+                columns: table => new
+                {
+                    PlatformId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Label = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Platform", x => x.PlatformId);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,6 +182,73 @@ namespace MCTCTicketSystem2.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Ticket",
+                columns: table => new
+                {
+                    TicketId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DateSubmit = table.Column<DateTime>(nullable: false, defaultValueSql: "GETDATE()"),
+                    DateCompleted = table.Column<DateTime>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    isActive = table.Column<string>(nullable: true),
+                    activeMessage = table.Column<string>(nullable: true),
+                    AdminComment = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false),
+                    PlatformId = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ticket", x => x.TicketId);
+                    table.ForeignKey(
+                        name: "FK_Ticket_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Ticket_Platform_PlatformId",
+                        column: x => x.PlatformId,
+                        principalTable: "Platform",
+                        principalColumn: "PlatformId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Ticket_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "isAdmin" },
+                values: new object[] { "00000000-ffff-ffff-ffff-ffffffffffff", 0, "eb9ada78-5a31-4eff-9df9-4ff5442a15c4", "ApplicationUser", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEObaX+hWFTNb6jjwDIpOZIItuVUjghbPRdMhF+6tcQwIr8/bV8GBlcVcFLaYS/Qv3g==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", false, "admin@admin.com", true });
+
+            migrationBuilder.InsertData(
+                table: "Category",
+                columns: new[] { "CategoryId", "Label", "Rating" },
+                values: new object[,]
+                {
+                    { 1, "Grammatical Errors", 2 },
+                    { 2, "Missing/Out Of Date Content", 3 },
+                    { 3, "Broken Link", 4 },
+                    { 4, "Webpage Unresponsive/Not Loading", 5 },
+                    { 5, "Other", 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Platform",
+                columns: new[] { "PlatformId", "Label" },
+                values: new object[,]
+                {
+                    { 1, "PC" },
+                    { 2, "Mobile" },
+                    { 3, "Mac" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,6 +287,21 @@ namespace MCTCTicketSystem2.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ticket_CategoryId",
+                table: "Ticket",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ticket_PlatformId",
+                table: "Ticket",
+                column: "PlatformId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ticket_UserId",
+                table: "Ticket",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -211,7 +322,16 @@ namespace MCTCTicketSystem2.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Ticket");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Category");
+
+            migrationBuilder.DropTable(
+                name: "Platform");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
