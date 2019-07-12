@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MCTCTicketSystem2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190701181941_ticket-model-update2")]
-    partial class ticketmodelupdate2
+    [Migration("20190709172134_new-db-ticket-update")]
+    partial class newdbticketupdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -118,12 +118,16 @@ namespace MCTCTicketSystem2.Migrations
 
                     b.Property<int>("PlatformId");
 
+                    b.Property<string>("Title");
+
                     b.Property<string>("UserId")
                         .IsRequired();
 
                     b.Property<string>("activeMessage");
 
-                    b.Property<bool>("isActive");
+                    b.Property<string>("isActive");
+
+                    b.Property<bool>("isAdmin");
 
                     b.HasKey("TicketId");
 
@@ -319,13 +323,13 @@ namespace MCTCTicketSystem2.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7c728dd8-1b10-4c6e-8815-80a1affd8ba4",
+                            ConcurrencyStamp = "8b63130e-51c8-49fc-afd7-27a98b0c962f",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGxSNZvzP3sGEqC8tpv/DGeCkNAM8fHtRBYs+k+sbWxfgsXWk1m9Rc+ShRuK/SkflA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEL6VHIyBxAm2EiGwH+Bui4NTILbb0DQUMq7sUrAKghFq5ArDVs+cDNnKJo2FoLNsfA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,
@@ -347,7 +351,7 @@ namespace MCTCTicketSystem2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MCTCTicketSystem2.Models.ApplicationUser", "User")
-                        .WithMany("Tickets")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace MCTCTicketSystem2.Models
@@ -16,8 +17,9 @@ namespace MCTCTicketSystem2.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [Display(Name = "Submission Date")]
         public DateTime DateSubmit { get; set; }
-
+        [Display(Name = "Date Completed")]
         public DateTime? DateCompleted { get; set; }
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
         public bool isActive { get; set; }
         [Display(Name = "Ticket Status")]
@@ -37,6 +39,8 @@ namespace MCTCTicketSystem2.Models
         public SelectList Platforms { get; set; }
         public Platform currentPlatform { get; set; }
         public Category currentCategory { get; set; }
+        public string Title { get; set; }
+
 
     }
 }

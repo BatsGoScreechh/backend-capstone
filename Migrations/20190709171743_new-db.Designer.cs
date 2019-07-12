@@ -4,14 +4,16 @@ using MCTCTicketSystem2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MCTCTicketSystem2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190709171743_new-db")]
+    partial class newdb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,7 +125,7 @@ namespace MCTCTicketSystem2.Migrations
 
                     b.Property<string>("activeMessage");
 
-                    b.Property<bool>("isActive");
+                    b.Property<string>("isActive");
 
                     b.HasKey("TicketId");
 
@@ -319,13 +321,13 @@ namespace MCTCTicketSystem2.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "352f281e-d947-4f4e-9341-52820b735345",
+                            ConcurrencyStamp = "eb9ada78-5a31-4eff-9df9-4ff5442a15c4",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJFbS0Ha+bQ/LvrvYsZPG9sZi24PHbIr/kzoyYkQoi9dIXBLU5ZQY6HXgTUcV+neSg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEObaX+hWFTNb6jjwDIpOZIItuVUjghbPRdMhF+6tcQwIr8/bV8GBlcVcFLaYS/Qv3g==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,

@@ -8,7 +8,7 @@ namespace MCTCTicketSystem2.Models.TicketViewModels
 {
     public class TicketViewModel
     {
-        public IEnumerable<Ticket> tickets { get; set; }
-
+        public Ticket tickets { get; set; }
+        public ApplicationUser applicationUser { get; set; }
     }
 }

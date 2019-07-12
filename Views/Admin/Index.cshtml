@@ -1,0 +1,147 @@
+﻿@model IEnumerable<MCTCTicketSystem2.Models.Ticket>
+@{
+    ViewData["Title"] = "Index";
+}
+    <html>
+    <head>
+        <script>
+window.onload = function () {
+
+var result = @Html.Raw(ViewBag.DataPoints);
+var dataPoints =[];
+for(var i = 0; i < result.length; i++){
+	dataPoints.push({x:result[i].x, y:result[i].y});
+}
+var chart = new CanvasJS.Chart("chartContainer", {
+    animationEnabled: true,
+    title: {
+        text: "ASP.NET MVC Column Chart from Database"
+    },
+    data: [
+    {
+        type: "column",
+        dataPoints: dataPoints,
+    }
+    ]
+});
+chart.render();
+
+};
+        </script>
+    </head>
+    <body>
+        @if (Model.Count(i => i.isActive == true) > 1)
+        {
+            <h1>There are @Model.Count(i => i.isActive == true) tickets that need attention.</h1>
+        }
+        @if (Model.Count(i => i.isActive == true) == 1)
+        {
+            <h1>There is @Model.Count(i => i.isActive == true) ticket that needs attention.</h1>
+        }
+        @if (Model.Count(i => i.isActive == true) == 0)
+        {
+            <h1>There are no tickets that need attention.</h1>
+        }
+        <a onclick="hideShowClick()" style="color:#0645AD; cursor: pointer;">View Open Tickets</a>
+
+        <h2>Closed tickets: @Model.Count(i => i.isActive == false)</h2>
+        <a onclick="hideShowClosed()" style="color:#0645AD; cursor: pointer;">View Closed Tickets</a>
+
+        <div id="open-ticket" style="display: none; margin-top: 10px;">
+            <h3>Open Tickets</h3>
+            <table class="table">
+                <thead class="header">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DateSubmit)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.activeMessage)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        @if (item.isActive == true)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DateSubmit)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.activeMessage)
+                                </td>
+                                <td>
+                                    |
+                                    <a asp-action="Details" asp-route-id="@item.TicketId">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.TicketId">Close</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <div id="closed-ticket" style="display: none; margin-top: 10px;">
+            <h3>Closed Tickets</h3>
+            <table class="table">
+                <thead class="header">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DateSubmit)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DateCompleted)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.activeMessage)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        @if (item.isActive == false)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DateSubmit)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DateCompleted)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.activeMessage)
+                                </td>
+                                <td>
+                                    |
+                                    <a asp-action="Details" asp-route-id="@item.TicketId">Details</a> |
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    </body>
+    </html>
+    

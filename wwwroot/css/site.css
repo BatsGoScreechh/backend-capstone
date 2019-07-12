@@ -7,9 +7,7 @@ a.navbar-brand {
   word-break: break-all;
 }
 
-table {
-    table-layout: fixed;
-}
+
 
 /* Sticky footer styles
 -------------------------------------------------- */
@@ -46,8 +44,12 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-image: url(https://c.pxhere.com/photos/b3/f6/blue_sky_white_clouds_heaven_background-615223.jpg!d);
+    background-size:cover;
+    background-attachment: fixed;
+    font-size: 3vh;
 }
 .footer {
   position: absolute;
@@ -57,4 +59,117 @@ body {
   /* Set the fixed height of the footer here */
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
+  background-color: #fff;
+  border-top: 1px solid blue !important;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+textarea {
+    width: 650px;
+    height: 65px;
+}
+
+nav {
+    border: none;
+    box-shadow: none;
+}
+.bg-white{
+    background-color: none !important;
+}
+.border-bottom {
+    border-bottom: none !important;
+}
+
+.box-shadow {
+    box-shadow: none;
+}
+
+.welcome-body {
+    border: 1px solid;
+    border-color: rgb(208, 223, 242);
+    border-radius: 10px;
+    box-shadow: rgba(0,0,0,0.4) 10px 10px;
+    width: 75%;
+    height: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    background-color: rgba(0,0,0,0.2);
+    background-attachment: fixed;
+}
+
+.welcome {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+    background-color: white;
+    border-top: 1px solid rgb(208, 223, 242);
+    border-bottom: 1px solid rgb(208, 223, 242);
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.navbar-nav {
+    justify-content: space-around !important; 
+    flex-direction: row;
+    text-align: center;
+}
+
+.login-register {
+    font-size: 2em;
+    background-color: white;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 25px;
+    box-shadow: rgba(0,0,0,0.4) 5px 5px;
+}
+
+.mctc {
+    height: 50%;
+    width: 50%;
+}
+
+.table {
+    background-color: white;
+    box-shadow: rgba(0,0,0,0.4) 5px 5px;
+}
+
+.header {
+    background-color: rgb(208, 223, 242);
+    border-bottom: 1px solid black;
 }

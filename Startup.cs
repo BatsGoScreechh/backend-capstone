@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MCTCTicketSystem2.Data;
 using MCTCTicketSystem2.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace MCTCTicketSystem2
 {
@@ -44,6 +45,7 @@ namespace MCTCTicketSystem2
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,8 +73,10 @@ namespace MCTCTicketSystem2
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Tickets}/{action=Index}");
+
             });
         }
+      
     }
 }

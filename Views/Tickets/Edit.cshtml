@@ -1,4 +1,9 @@
-﻿@model MCTCTicketSystem2.Models.Ticket
+﻿@using Microsoft.AspNetCore.Identity
+@using MCTCTicketSystem2.Models
+
+@model MCTCTicketSystem2.Models.Ticket
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Edit";
@@ -14,19 +19,14 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="TicketId" />
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="isActive" /> @Html.DisplayNameFor(model => model.activeMessage)
-                </label>
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AdminComment" class="control-label"></label>
-                <input asp-for="AdminComment" class="form-control" />
-                <span asp-validation-for="AdminComment" class="text-danger"></span>
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>

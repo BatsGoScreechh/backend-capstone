@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MCTCTicketSystem2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190627172213_model-updates")]
-    partial class modelupdates
+    [Migration("20190709173540_new-db-too")]
+    partial class newdbtoo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,11 +31,7 @@ namespace MCTCTicketSystem2.Migrations
 
                     b.Property<int>("Rating");
 
-                    b.Property<int?>("TicketId");
-
                     b.HasKey("CategoryId");
-
-                    b.HasIndex("TicketId");
 
                     b.ToTable("Category");
 
@@ -80,11 +76,7 @@ namespace MCTCTicketSystem2.Migrations
 
                     b.Property<string>("Label");
 
-                    b.Property<int?>("TicketId");
-
                     b.HasKey("PlatformId");
-
-                    b.HasIndex("TicketId");
 
                     b.ToTable("Platform");
 
@@ -116,9 +108,7 @@ namespace MCTCTicketSystem2.Migrations
 
                     b.Property<int>("CategoryId");
 
-                    b.Property<DateTime?>("DateCompleted")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETDATE()");
+                    b.Property<DateTime?>("DateCompleted");
 
                     b.Property<DateTime>("DateSubmit")
                         .ValueGeneratedOnAddOrUpdate()
@@ -128,16 +118,22 @@ namespace MCTCTicketSystem2.Migrations
 
                     b.Property<int>("PlatformId");
 
-                    b.Property<int>("UserId");
+                    b.Property<string>("Title");
 
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .IsRequired();
 
-                    b.Property<bool>("isActive");
+                    b.Property<string>("activeMessage");
+
+                    b.Property<string>("isActive");
 
                     b.HasKey("TicketId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("PlatformId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Ticket");
                 });
@@ -325,13 +321,13 @@ namespace MCTCTicketSystem2.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b6fd2d06-cf98-42f9-af56-6f711573fc8a",
+                            ConcurrencyStamp = "f2ee5ee3-990a-43d0-8a8a-29ea3790888c",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHXkv75Bg+atVZa7MZsmrRBMo+CJMRvaAGb7s+yV+3B7KZUQFpmUV2ZxkWtfI86yKA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECw95UIgIyKWCRz82HBsqZjOgs256K7wiWyaiyKFYox0TZuWvJB9EM3bm8V6CkA8fg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,
@@ -340,25 +336,21 @@ namespace MCTCTicketSystem2.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MCTCTicketSystem2.Models.Category", b =>
-                {
-                    b.HasOne("MCTCTicketSystem2.Models.Ticket")
-                        .WithMany("Categories")
-                        .HasForeignKey("TicketId");
-                });
-
-            modelBuilder.Entity("MCTCTicketSystem2.Models.Platform", b =>
-                {
-                    b.HasOne("MCTCTicketSystem2.Models.Ticket")
-                        .WithMany("Platforms")
-                        .HasForeignKey("TicketId");
-                });
-
             modelBuilder.Entity("MCTCTicketSystem2.Models.Ticket", b =>
                 {
+                    b.HasOne("MCTCTicketSystem2.Models.Category", "currentCategory")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MCTCTicketSystem2.Models.Platform", "currentPlatform")
+                        .WithMany()
+                        .HasForeignKey("PlatformId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("MCTCTicketSystem2.Models.ApplicationUser", "User")
-                        .WithMany("Tickets")
-                        .HasForeignKey("UserId1")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

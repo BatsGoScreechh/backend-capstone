@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MCTCTicketSystem2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190627151714_MCTCTSTables")]
-    partial class MCTCTSTables
+    [Migration("20190709172252_new-db-ticket-update2")]
+    partial class newdbticketupdate2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,78 +20,6 @@ namespace MCTCTicketSystem2.Migrations
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("MCTCTicketSystem2.Models.ApplicationUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("isAdmin");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "c0c9beed-7a40-4c33-b91b-2ad3f33d1abc",
-                            Email = "admin@admin.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@ADMIN.COM",
-                            NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPBRIZHlP0V83VpOvrhtgLI9ftMDYBXAcBDf5fCbMh9LIvLjIgkvqX3dPCGk1v9z4g==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@admin.com",
-                            isAdmin = true
-                        });
-                });
 
             modelBuilder.Entity("MCTCTicketSystem2.Models.Category", b =>
                 {
@@ -180,9 +108,7 @@ namespace MCTCTicketSystem2.Migrations
 
                     b.Property<int>("CategoryId");
 
-                    b.Property<DateTime?>("DateCompleted")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETDATE()");
+                    b.Property<DateTime?>("DateCompleted");
 
                     b.Property<DateTime>("DateSubmit")
                         .ValueGeneratedOnAddOrUpdate()
@@ -192,16 +118,22 @@ namespace MCTCTicketSystem2.Migrations
 
                     b.Property<int>("PlatformId");
 
-                    b.Property<int>("UserId");
+                    b.Property<string>("Title");
 
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .IsRequired();
 
-                    b.Property<bool>("isActive");
+                    b.Property<string>("activeMessage");
+
+                    b.Property<string>("isActive");
 
                     b.HasKey("TicketId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("PlatformId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Ticket");
                 });
@@ -248,6 +180,62 @@ namespace MCTCTicketSystem2.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -320,11 +308,49 @@ namespace MCTCTicketSystem2.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("MCTCTicketSystem2.Models.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<bool>("isAdmin");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "00000000-ffff-ffff-ffff-ffffffffffff",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "32df368c-a2d8-45bb-bc7c-686f21211ab6",
+                            Email = "admin@admin.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "ADMIN@ADMIN.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIBSEks3nK86hoAxbMdcbWCTsqo/mDb33aipeSAjZkVt27RBOHuC1ey0ITM+HkdnMA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@admin.com",
+                            isAdmin = true
+                        });
+                });
+
             modelBuilder.Entity("MCTCTicketSystem2.Models.Ticket", b =>
                 {
+                    b.HasOne("MCTCTicketSystem2.Models.Category", "currentCategory")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MCTCTicketSystem2.Models.Platform", "currentPlatform")
+                        .WithMany()
+                        .HasForeignKey("PlatformId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("MCTCTicketSystem2.Models.ApplicationUser", "User")
-                        .WithMany("Tickets")
-                        .HasForeignKey("UserId1")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -338,7 +364,7 @@ namespace MCTCTicketSystem2.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("MCTCTicketSystem2.Models.ApplicationUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -346,7 +372,7 @@ namespace MCTCTicketSystem2.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("MCTCTicketSystem2.Models.ApplicationUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -359,7 +385,7 @@ namespace MCTCTicketSystem2.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("MCTCTicketSystem2.Models.ApplicationUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -367,7 +393,7 @@ namespace MCTCTicketSystem2.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("MCTCTicketSystem2.Models.ApplicationUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

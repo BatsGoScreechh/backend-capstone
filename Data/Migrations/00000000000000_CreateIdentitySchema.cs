@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MCTCTicketSystem2.Migrations
+namespace MCTCTicketSystem2.Data.Migrations
 {
-    public partial class MCTCTSTables : Migration
+    public partial class CreateIdentitySchema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,39 +40,11 @@ namespace MCTCTicketSystem2.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    isAdmin = table.Column<bool>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Category",
-                columns: table => new
-                {
-                    CategoryId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Label = table.Column<string>(nullable: true),
-                    Rating = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Category", x => x.CategoryId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Platform",
-                columns: table => new
-                {
-                    PlatformId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Label = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Platform", x => x.PlatformId);
                 });
 
             migrationBuilder.CreateTable(
@@ -181,60 +153,6 @@ namespace MCTCTicketSystem2.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Ticket",
-                columns: table => new
-                {
-                    TicketId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DateSubmit = table.Column<DateTime>(nullable: false, defaultValueSql: "GETDATE()"),
-                    DateCompleted = table.Column<DateTime>(nullable: true, defaultValueSql: "GETDATE()"),
-                    Description = table.Column<string>(nullable: true),
-                    isActive = table.Column<bool>(nullable: false),
-                    AdminComment = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: false),
-                    UserId1 = table.Column<string>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: false),
-                    PlatformId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ticket", x => x.TicketId);
-                    table.ForeignKey(
-                        name: "FK_Ticket_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "isAdmin" },
-                values: new object[] { "00000000-ffff-ffff-ffff-ffffffffffff", 0, "c0c9beed-7a40-4c33-b91b-2ad3f33d1abc", "admin@admin.com", true, false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEPBRIZHlP0V83VpOvrhtgLI9ftMDYBXAcBDf5fCbMh9LIvLjIgkvqX3dPCGk1v9z4g==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", false, "admin@admin.com", true });
-
-            migrationBuilder.InsertData(
-                table: "Category",
-                columns: new[] { "CategoryId", "Label", "Rating" },
-                values: new object[,]
-                {
-                    { 1, "Grammatical Errors", 2 },
-                    { 2, "Missing/Out Of Date Content", 3 },
-                    { 3, "Broken Link", 4 },
-                    { 4, "Webpage Unresponsive/Not Loading", 5 },
-                    { 5, "Other", 1 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Platform",
-                columns: new[] { "PlatformId", "Label" },
-                values: new object[,]
-                {
-                    { 1, "PC" },
-                    { 2, "Mobile" },
-                    { 3, "Mac" }
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -273,11 +191,6 @@ namespace MCTCTicketSystem2.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Ticket_UserId1",
-                table: "Ticket",
-                column: "UserId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -296,15 +209,6 @@ namespace MCTCTicketSystem2.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "Category");
-
-            migrationBuilder.DropTable(
-                name: "Platform");
-
-            migrationBuilder.DropTable(
-                name: "Ticket");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
