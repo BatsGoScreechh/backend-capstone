@@ -267,44 +267,7 @@ namespace MCTCTicketSystem2.Controllers
             return new SelectList(newList, "Value", "Text", selectedItemValue);
         }
 
-        public IActionResult Line()
-        {
-
-        //list of countries  
-       
-        var lstModel = new List<SimpleReportViewModel>();
-        lstModel.Add( new SimpleReportViewModel  
-           {  
-               DimensionOne = "Brazil",  
-               Quantity = 10  
-           } );  
-           lstModel.Add( new SimpleReportViewModel  
-           {  
-               DimensionOne = "USA",  
-               Quantity = 6  
-           } );  
-           lstModel.Add( new SimpleReportViewModel  
-           {  
-               DimensionOne = "Portugal",  
-               Quantity = 4  
-           } );  
-           lstModel.Add( new SimpleReportViewModel  
-           {  
-               DimensionOne = "Russia",  
-               Quantity = 7  
-           } );  
-           lstModel.Add( new SimpleReportViewModel  
-           {  
-               DimensionOne = "Ireland",  
-               Quantity = 9 
-           } );  
-           lstModel.Add( new SimpleReportViewModel  
-           {  
-               DimensionOne = "Germany",  
-               Quantity = 1
-           } );  
-           return View(lstModel );  
-       }  
+        
     }
 
 }
